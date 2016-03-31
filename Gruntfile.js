@@ -19,6 +19,10 @@ module.exports = function(grunt) {
       prod: {
         NODE_ENV: 'production',
         DEST: 'temp'
+      },
+      dev: {
+        NODE_ENV: 'development',
+        DEST: 'temp'
       }
     },
 
@@ -49,7 +53,12 @@ module.exports = function(grunt) {
 
     eslint: {
       target: [
-        // Add list of files to lint here
+        'public/**/*.js',
+        'app/**/*.js',
+        'lib/**/*.js',
+        'Gruntfile.js',
+        './*.js',
+        'spec/**/*.js'
       ]
     },
 
@@ -112,20 +121,13 @@ module.exports = function(grunt) {
     grunt.task.run([ 'watch' ]);
   });
 
-
-  grunt.registerTask('default', [
-    'build'
-  ]);
-
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('start', [
-    'nodemon'
-  ]);
 
   grunt.registerTask('test', [
+    'eslint',
     'mochaTest'
   ]);
 
@@ -135,21 +137,36 @@ module.exports = function(grunt) {
     'cssmin'
   ]);
 
-// START HERE: use this for NODE_ENV detection? https://www.npmjs.com/package/nconf
+// TODO - add tests
+
+// deploy
+  // test
+  // build (concat, uglify, cssmin)
+  // upload
+
+// Upload:
+  // production:
+    // set env to prod
+    // shell: git push live master
+  // development:  
+    // set env to development
+    // nodemon
 
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
-      grunt.task.run(['env']);
-      grunt.task.run(['build']);
-      grunt.task.run(['start']);
+      grunt.task.run(['env:prod']);
+      grunt.task.run(['shell:prodServer']);
+      // grunt.task.run(['build']);
+      // grunt.task.run(['start']);
     } else {
+      grunt.task.run(['env:dev']);
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
-    'shell:prodServer'
+    'test', 'build', 'upload'
   ]);
 };
