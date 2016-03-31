@@ -68,7 +68,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'public/',
           src: '*.css',
-          dest: 'public/dist/',
+          dest: 'public/',
           ext: '.min.css'
         }]
       }
