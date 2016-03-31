@@ -146,7 +146,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       grunt.task.run(['env:prod']);
-      // grunt.task.run(['shell:prodServer']);
+      grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run(['env:dev']);
       grunt.task.run([ 'server-dev' ]);
