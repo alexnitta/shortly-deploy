@@ -14,6 +14,15 @@ module.exports = function(grunt) {
       }
     },
 
+
+    env: {
+      prod: {
+        NODE_ENV: 'production',
+        DEST: 'temp'
+      }
+    },
+
+
     mochaTest: {
       test: {
         options: {
@@ -88,6 +97,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-env');
 
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
@@ -131,17 +141,15 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
-      grunt.task.run(['prodServer']);
+      grunt.task.run(['env']);
+      grunt.task.run(['build']);
+      grunt.task.run(['start']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
-    'build',
-    'upload',
-    'start'
+    'shell:prodServer'
   ]);
-
-
 };
