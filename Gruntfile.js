@@ -40,6 +40,15 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'public/',
+          src: '*.css',
+          dest: 'public/dist/',
+          ext: '.min.css'
+        }]
+      }
     },
 
     watch: {
@@ -115,7 +124,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'concat',
-    'uglify'
+    'uglify',
+    'cssmin'
   ]);
 
 
