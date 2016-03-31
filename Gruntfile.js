@@ -142,29 +142,11 @@ module.exports = function(grunt) {
     'cssmin'
   ]);
 
-// TODO - add tests
-
-// deploy
-  // test
-  // build (concat, uglify, cssmin)
-  // upload
-
-// Upload:
-  // production:
-    // set env to prod
-    // shell: git push live master
-  // development:  
-    // set env to development
-    // nodemon
-
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
       grunt.task.run(['env:prod']);
-      grunt.task.run(['shell:prodServer']);
-      // grunt.task.run(['build']);
-      // grunt.task.run(['start']);
+      // grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run(['env:dev']);
       grunt.task.run([ 'server-dev' ]);
