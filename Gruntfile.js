@@ -70,7 +70,6 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'export NODE_ENV=production',
         command: 'git push live master'
       }
     },
@@ -99,14 +98,6 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('upload', function(n) {
-    if (grunt.option('prod')) {
-      // add your production server task here
-      grunt.task.run(['prodServer']);
-    }
-    grunt.task.run([ 'server-dev' ]);
-  });
-
   grunt.registerTask('default', [
     'build'
   ]);
@@ -129,8 +120,9 @@ module.exports = function(grunt) {
     'cssmin'
   ]);
 
+// START HERE: use this for NODE_ENV detection? https://www.npmjs.com/package/nconf
 
-  // why are there two 'upload' tasks?
+
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
