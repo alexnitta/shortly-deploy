@@ -70,7 +70,8 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push live server'
+        command: 'export NODE_ENV=production',
+        command: 'git push live master'
       }
     },
   });
